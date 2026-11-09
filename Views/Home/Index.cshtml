@@ -1,0 +1,261 @@
+﻿@model AutoSecurity.Models.ViewModels.HomeIndexVM
+
+@{
+    ViewData["Title"] = "Curadoria Automotiva";
+}
+
+<style>
+    /* LAYOUT PRINCIPAL DO HERO CARD */
+    .as-hero-card {
+        background: #121815;
+        border: 1px solid rgba(201, 242, 106, 0.15);
+        border-radius: 28px;
+        padding: 3.5rem 3rem;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    @@media (max-width: 992px) {
+        .as-hero-card {
+            grid-template-columns: 1fr;
+            padding: 2.5rem 1.8rem;
+        }
+    }
+
+    .as-hero-sub {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #809287;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+    }
+
+    .as-hero-h1 {
+        font-family: 'Syne', sans-serif;
+        font-size: 3.8rem;
+        font-weight: 800;
+        line-height: 1.05;
+        color: #ffffff;
+        letter-spacing: -1.5px;
+        margin: 0;
+    }
+
+    .as-hero-h1-italic {
+        font-family: 'Playfair Display', Georgia, serif;
+        font-style: italic;
+        font-size: 3.8rem;
+        font-weight: 400;
+        color: #c9f26a;
+        margin-top: 0.3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .as-hero-p {
+        color: #809287;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        max-width: 500px;
+        margin-bottom: 2.2rem;
+    }
+
+    .btn-as-lime {
+        background-color: #c9f26a;
+        color: #0b0f0d;
+        font-weight: 700;
+        font-size: 0.95rem;
+        padding: 14px 32px;
+        border-radius: 30px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 4px 20px rgba(201, 242, 106, 0.25);
+        transition: all 0.3s ease;
+    }
+
+    .btn-as-lime:hover {
+        background-color: #d7f58c;
+        color: #000;
+        transform: translateY(-2px);
+    }
+
+    .as-tags-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 2.2rem;
+    }
+
+    .as-tag-pill {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 8px 18px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        color: #809287;
+    }
+
+    /* ANIMAÇÕES DO SVG */
+    @@keyframes mtRoll {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    .mt-wheelSpin {
+        animation: mtRoll 1.25s linear infinite;
+        transform-box: fill-box;
+        transform-origin: center;
+    }
+
+    .as-badge-circle {
+        position: absolute;
+        right: 10px;
+        bottom: 10px;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 1px dashed rgba(201, 242, 106, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        animation: mtRoll 16s linear infinite;
+    }
+
+    /* CARDS DOS PRODUTOS */
+    .as-card {
+        background: #111613;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 20px;
+        overflow: hidden;
+        transition: 0.3s ease;
+    }
+    .as-card:hover { border-color: #c9f26a; transform: translateY(-5px); }
+</style>
+
+<div style="max-width: 1350px; margin: 0 auto; padding: 2rem 1.5rem;">
+
+    <!-- HERO CARD PRINCIPAL -->
+    <div class="as-hero-card">
+        
+        <!-- ESQUERDA -->
+        <div>
+            <div class="as-hero-sub">
+                AUTOSECURITY · CURADORIA AUTOMOTIVA
+            </div>
+
+            <h1 class="as-hero-h1">
+                Seu próximo<br>carro.
+            </h1>
+
+            <div class="as-hero-h1-italic">
+                Uma nova história.
+            </div>
+
+            <p class="as-hero-p">
+                Veículos escolhidos a dedo, acessórios que fazem sentido e a liberdade de encontrar o caminho certo.
+            </p>
+
+            <div>
+                <a asp-controller="Store" asp-action="Index" class="btn-as-lime">
+                    Encontre seu próximo carro <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="as-tags-group">
+                <span class="as-tag-pill">Curadoria</span>
+                <span class="as-tag-pill">Garantia</span>
+                <span class="as-tag-pill">Entrega PT</span>
+            </div>
+        </div>
+
+        <!-- DIREITA: CARRO -->
+        <div style="position: relative; text-align: center;">
+            
+            <div class="as-badge-circle">
+                <svg viewBox="0 0 100 100" width="110" height="110">
+                    <path id="circlePath" d="M 50, 50 m -37, 0 a 37,37 0 1,1 74,0 a 37,37 0 1,1 -74,0" fill="none"/>
+                    <text fill="#c9f26a" font-size="8" font-weight="700" letter-spacing="2">
+                        <textPath href="#circlePath">
+                            COM CALMA. COM CRITÉRIO. •
+                        </textPath>
+                    </text>
+                </svg>
+            </div>
+
+            <svg viewBox="0 0 500 220" width="100%" height="auto" style="max-width: 440px;">
+                <ellipse cx="250" cy="185" rx="190" ry="12" fill="#000" opacity="0.6"/>
+                <path d="M 60,165 C 60,165 80,120 150,110 C 200,80 300,75 370,115 C 420,125 450,145 450,165 Z" fill="#121815" stroke="#c9f26a" stroke-width="2"/>
+                <path d="M 165,110 C 210,88 295,85 355,115 Z" fill="#0b0f0d" stroke="#c9f26a" stroke-width="1" opacity="0.8"/>
+                <path d="M 100,165 Q 250,150 430,165" stroke="#c9f26a" stroke-width="1.5" fill="none" opacity="0.4"/>
+
+                <!-- RODA DIANTEIRA -->
+                <g transform="translate(140, 165)">
+                    <circle cx="0" cy="0" r="28" fill="#0b0f0d" stroke="#c9f26a" stroke-width="3"/>
+                    <g class="mt-wheelSpin">
+                        <circle cx="0" cy="0" r="20" fill="none" stroke="#c9f26a" stroke-width="1" stroke-dasharray="3,3"/>
+                        <line x1="0" y1="-22" x2="0" y2="22" stroke="#c9f26a" stroke-width="2"/>
+                        <line x1="-22" y1="0" x2="22" y2="0" stroke="#c9f26a" stroke-width="2"/>
+                        <line x1="-15" y1="-15" x2="15" y2="15" stroke="#c9f26a" stroke-width="1.5"/>
+                        <line x1="-15" y1="15" x2="15" y2="-15" stroke="#c9f26a" stroke-width="1.5"/>
+                    </g>
+                    <circle cx="0" cy="0" r="6" fill="#c9f26a"/>
+                </g>
+
+                <!-- RODA TRASEIRA -->
+                <g transform="translate(360, 165)">
+                    <circle cx="0" cy="0" r="28" fill="#0b0f0d" stroke="#c9f26a" stroke-width="3"/>
+                    <g class="mt-wheelSpin">
+                        <circle cx="0" cy="0" r="20" fill="none" stroke="#c9f26a" stroke-width="1" stroke-dasharray="3,3"/>
+                        <line x1="0" y1="-22" x2="0" y2="22" stroke="#c9f26a" stroke-width="2"/>
+                        <line x1="-22" y1="0" x2="22" y2="0" stroke="#c9f26a" stroke-width="2"/>
+                        <line x1="-15" y1="-15" x2="15" y2="15" stroke="#c9f26a" stroke-width="1.5"/>
+                        <line x1="-15" y1="15" x2="15" y2="-15" stroke="#c9f26a" stroke-width="1.5"/>
+                    </g>
+                    <circle cx="0" cy="0" r="6" fill="#c9f26a"/>
+                </g>
+            </svg>
+
+        </div>
+
+    </div>
+
+    <!-- PESQUISA AVANÇADA / MATRÍCULA -->
+    <div style="margin-top: 2.5rem;">
+        @await Html.PartialAsync("_ProductSearchCard")
+    </div>
+
+    <!-- DESTAQUES DA CURADORIA -->
+    @if (Model.FeaturedProducts != null && Model.FeaturedProducts.Any())
+    {
+        <div style="margin-top: 3rem;">
+            <h3 style="font-family: 'Syne', sans-serif; font-weight: 700; color: #fff; margin-bottom: 1.5rem;">Destaques da Curadoria</h3>
+            <div class="row g-4">
+                @foreach (var item in Model.FeaturedProducts)
+                {
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <div class="as-card p-3">
+                            <img src="@item.ImageUrl" class="img-fluid rounded mb-3" alt="@item.Name" style="height:160px; width:100%; object-fit:cover;">
+                            <h5 style="color: #fff; font-size: 1.1rem; margin-bottom: 0.4rem;">@item.Name</h5>
+                            <p style="color: #809287; font-size: 0.85rem; height: 40px; overflow: hidden;">@item.Description</p>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <span style="color:#c9f26a; font-weight:bold; font-size: 1.2rem;">@item.Price.ToString("C")</span>
+                                <form asp-controller="Cart" asp-action="Add" method="post">
+                                    <input type="hidden" name="id" value="@item.Id" />
+                                    <button type="submit" style="background:#c9f26a; color:#000; border:none; width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center;">
+                                        <i class="bi bi-plus-lg"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>

@@ -1,0 +1,263 @@
+@{
+    ViewData["Title"] = "Entrar";
+}
+
+<style>
+    .as-login-container {
+        max-width: 480px;
+        margin: 5rem auto;
+        padding: 0 1.5rem;
+    }
+
+    .as-login-title {
+        font-family: 'Syne', sans-serif;
+        font-size: 2.2rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 0.4rem;
+        letter-spacing: -0.5px;
+    }
+
+    .as-login-sub {
+        color: #809287;
+        font-size: 0.95rem;
+        margin-bottom: 3rem;
+    }
+
+    /* INPUTS SUBLINHADOS MINIMALISTAS (SEM CAIXAS BRANCAS) */
+    .as-input-group {
+        position: relative;
+        margin-bottom: 2.2rem;
+    }
+
+    .as-input-wrapper {
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        padding-bottom: 10px;
+        transition: border-color 0.3s ease;
+    }
+
+    .as-input-wrapper:focus-within {
+        border-bottom-color: #c9f26a;
+    }
+
+    .as-input-icon {
+        color: #809287;
+        font-size: 1.1rem;
+        margin-right: 14px;
+        transition: color 0.3s ease;
+    }
+
+    .as-input-wrapper:focus-within .as-input-icon {
+        color: #c9f26a;
+    }
+
+    .as-line-input {
+        background: transparent !important;
+        border: none !important;
+        outline: none !important;
+        color: #ffffff !important;
+        font-size: 1rem;
+        width: 100%;
+        padding: 2px 0;
+        box-shadow: none !important;
+    }
+
+    .as-line-input::placeholder {
+        color: #52635a;
+    }
+
+    /* REMOVER CAIXA BRANCA DE PREENCHIMENTO AUTOMÁTICO DO NAUFRAGADOR */
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus {
+        -webkit-text-fill-color: #ffffff !important;
+        -webkit-box-shadow: 0 0 0px 1000px #0b0f0d inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+
+    .as-eye-toggle {
+        background: none;
+        border: none;
+        color: #809287;
+        cursor: pointer;
+        padding: 0 6px;
+        font-size: 1.1rem;
+        transition: color 0.2s ease;
+    }
+
+    .as-eye-toggle:hover {
+        color: #c9f26a;
+    }
+
+    /* OPÇÕES & CHECKBOX */
+    .as-options-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 2.5rem;
+    }
+
+    .as-check-label {
+        color: #809287;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .as-checkbox {
+        accent-color: #c9f26a;
+        width: 16px;
+        height: 16px;
+        cursor: pointer;
+    }
+
+    .as-forgot-btn {
+        color: #809287;
+        text-decoration: none;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        transition: color 0.2s ease;
+    }
+
+    .as-forgot-btn:hover {
+        color: #c9f26a;
+    }
+
+    /* BOTÃO ENTRAR */
+    .btn-as-login {
+        background-color: #c9f26a;
+        color: #0b0f0d;
+        font-weight: 800;
+        font-size: 0.9rem;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        padding: 14px 42px;
+        border-radius: 30px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        box-shadow: 0 4px 20px rgba(201, 242, 106, 0.2);
+    }
+
+    .btn-as-login:hover {
+        background-color: #d7f58c;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px rgba(201, 242, 106, 0.35);
+    }
+
+    /* SECÇÃO REGISTAR */
+    .as-register-section {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .as-register-prompt {
+        color: #809287;
+        font-size: 0.9rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .as-register-link {
+        color: #c9f26a;
+        font-weight: 700;
+        text-decoration: none;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        transition: color 0.2s ease;
+    }
+
+    .as-register-link:hover {
+        color: #ffffff;
+    }
+
+    .as-error-box {
+        background: rgba(255, 77, 77, 0.1);
+        border-left: 3px solid #ff4d4d;
+        color: #ff6b6b;
+        padding: 12px 16px;
+        border-radius: 6px;
+        font-size: 0.88rem;
+        margin-bottom: 2rem;
+    }
+</style>
+
+<div class="as-login-container">
+    
+    <h1 class="as-login-title">Entrar</h1>
+    <p class="as-login-sub">Aceda à sua conta AutoSecurity</p>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="as-error-box">
+            <i class="bi bi-exclamation-circle me-2"></i> @ViewBag.Error
+        </div>
+    }
+
+    <form asp-controller="Account" asp-action="Login" method="post">
+        
+        <!-- EMAIL -->
+        <div class="as-input-group">
+            <div class="as-input-wrapper">
+                <i class="bi bi-person as-input-icon"></i>
+                <input type="email" name="Email" class="as-line-input" placeholder="E-mail" required />
+            </div>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="as-input-group">
+            <div class="as-input-wrapper">
+                <i class="bi bi-lock as-input-icon"></i>
+                <input type="password" id="passInput" name="Password" class="as-line-input" placeholder="Senha" required />
+                <button type="button" class="as-eye-toggle" onclick="togglePass()">
+                    <i id="eyeIco" class="bi bi-eye"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- MANTER SESSÃO & RECUPERAR PASSWORD -->
+        <div class="as-options-row">
+            <label class="as-check-label">
+                <input type="checkbox" name="RememberMe" value="true" class="as-checkbox" />
+                <span>Manter sessão</span>
+            </label>
+            
+            <a href="#" class="as-forgot-btn">RECUPERAR PASSWORD</a>
+        </div>
+
+        <!-- BOTÃO ENTRAR -->
+        <div>
+            <button type="submit" class="btn-as-login">ENTRAR</button>
+        </div>
+
+    </form>
+
+    <!-- REGISTAR -->
+    <div class="as-register-section">
+        <p class="as-register-prompt">Ainda não tem conta?</p>
+        <a asp-controller="Account" asp-action="Register" class="as-register-link">REGISTAR</a>
+    </div>
+
+</div>
+
+<script>
+    function togglePass() {
+        const input = document.getElementById('passInput');
+        const icon = document.getElementById('eyeIco');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('bi-eye', 'bi-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('bi-eye-slash', 'bi-eye');
+        }
+    }
+</script>

@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - AutoSecurity</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,400;1,600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --as-bg: #0b0f0d;
+            --as-surface: #121815;
+            --as-border: rgba(255, 255, 255, 0.1);
+            --as-lime: #c9f26a;
+            --as-text: #ffffff;
+            --as-muted: #809287;
+        }
+
+        body {
+            background-color: var(--as-bg) !important;
+            color: var(--as-text) !important;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* HEADER SUPERIOR */
+        .as-header {
+            background: #0b0f0d;
+            border-bottom: 1px solid var(--as-border);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+        }
+
+        .as-header-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+        }
+
+        /* BOTÃO DE TRÊS PONTINHOS */
+        .as-dots-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--as-border);
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .as-dots-btn .dot {
+            width: 4px;
+            height: 4px;
+            background-color: var(--as-lime);
+            border-radius: 50%;
+            transition: transform 0.25s ease;
+        }
+
+        .as-dots-btn:hover {
+            background: rgba(201, 242, 106, 0.12);
+            border-color: var(--as-lime);
+            box-shadow: 0 0 15px rgba(201, 242, 106, 0.25);
+        }
+
+        .as-dots-btn:hover .dot { transform: scale(1.4); }
+
+        /* LOGO AO CENTRO */
+        .as-logo-center {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .as-logo-badge {
+            width: 36px;
+            height: 36px;
+            background: #161c18;
+            border: 1px solid var(--as-border);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--as-lime);
+        }
+
+        /* AÇÕES À DIREITA */
+        .as-right-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .as-icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--as-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            transition: all 0.2s ease;
+        }
+
+        .as-icon-btn:hover {
+            border-color: var(--as-lime);
+            color: var(--as-lime);
+        }
+
+        .as-user-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--as-border);
+            border-radius: 30px;
+            padding: 7px 16px;
+            font-size: 0.88rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* SIDEBAR LATERAL DE CATEGORIAS */
+        .as-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            z-index: 1040;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .as-overlay.active { opacity: 1; pointer-events: auto; }
+
+        .as-sidebar {
+            position: fixed;
+            top: 0; left: 0; bottom: 0;
+            width: 320px;
+            background: #121815;
+            border-right: 1px solid var(--as-border);
+            z-index: 1050;
+            transform: translateX(-100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+        }
+        .as-sidebar.active { transform: translateX(0); }
+
+        .as-sidebar-head {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--as-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .as-sidebar-title { font-family: 'Syne', sans-serif; font-weight: 700; color: #fff; }
+        .as-close-btn { background: none; border: none; color: var(--as-muted); font-size: 1.5rem; cursor: pointer; }
+        .as-close-btn:hover { color: var(--as-lime); }
+
+        .as-cat-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; flex: 1; }
+        .as-cat-item { border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+        .as-cat-link {
+            width: 100%; padding: 14px 20px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: none; border: none; color: #e1e7e3; font-size: 0.95rem;
+            cursor: pointer; transition: all 0.2s ease; text-align: left;
+        }
+        .as-cat-link:hover { background: rgba(201, 242, 106, 0.08); color: var(--as-lime); }
+        .as-cat-left { display: flex; align-items: center; gap: 12px; }
+        .as-cat-icon { color: var(--as-lime); font-size: 1.2rem; width: 24px; text-align: center; }
+
+        .as-sub-menu { background: rgba(0,0,0,0.3); }
+        .as-sub-link { display: block; padding: 10px 20px 10px 56px; color: var(--as-muted); font-size: 0.88rem; }
+        .as-sub-link:hover { color: var(--as-lime); }
+    </style>
+</head>
+<body>
+
+    <div id="asOverlay" class="as-overlay" onclick="toggleSidebar()"></div>
+    <aside id="asSidebar" class="as-sidebar">
+        <div class="as-sidebar-head">
+            <span class="as-sidebar-title"><i class="bi bi-grid-3x3-gap-fill me-2" style="color:#c9f26a;"></i> Peças & Categorias</span>
+            <button class="as-close-btn" onclick="toggleSidebar()">&times;</button>
+        </div>
+        <ul class="as-cat-list">
+            <li class="as-cat-item">
+                <a class="as-cat-link" asp-controller="Store" asp-action="Index" asp-route-category="Carros">
+                    <span class="as-cat-left"><i class="bi bi-car-front-fill as-cat-icon"></i> Carros & Veículos</span>
+                </a>
+            </li>
+            <li class="as-cat-item">
+                <button class="as-cat-link" data-bs-toggle="collapse" data-bs-target="#subTravagem">
+                    <span class="as-cat-left"><i class="bi bi-disc as-cat-icon"></i> Sistema de Travagem</span>
+                    <i class="bi bi-chevron-down small text-muted"></i>
+                </button>
+                <div id="subTravagem" class="collapse as-sub-menu">
+                    <a class="as-sub-link" href="/Store?category=Discos">Discos de Travão</a>
+                    <a class="as-sub-link" href="/Store?category=Pastilhas">Pastilhas de Travão</a>
+                </div>
+            </li>
+            <li class="as-cat-item">
+                <button class="as-cat-link" data-bs-toggle="collapse" data-bs-target="#subFiltros">
+                    <span class="as-cat-left"><i class="bi bi-funnel as-cat-icon"></i> Filtros</span>
+                    <i class="bi bi-chevron-down small text-muted"></i>
+                </button>
+                <div id="subFiltros" class="collapse as-sub-menu">
+                    <a class="as-sub-link" href="/Store?category=FiltroOleo">Filtro de Óleo</a>
+                    <a class="as-sub-link" href="/Store?category=FiltroAr">Filtro de Ar</a>
+                </div>
+            </li>
+            <li class="as-cat-item">
+                <a class="as-cat-link" asp-controller="Store" asp-action="Index" asp-route-category="Acessórios">
+                    <span class="as-cat-left"><i class="bi bi-shield-lock-fill as-cat-icon"></i> Segurança & Dashcams</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <header class="as-header">
+        <div class="as-header-grid">
+            <div>
+                <button class="as-dots-btn" onclick="toggleSidebar()" title="Categorias">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </button>
+            </div>
+
+            <a class="as-logo-center" asp-controller="Home" asp-action="Index">
+                <div class="as-logo-badge"><i class="bi bi-shield-check"></i></div>
+                <span>AutoSecurity<span style="color:#c9f26a;">.</span></span>
+            </a>
+
+            <div class="as-right-group">
+                <a class="as-icon-btn" href="#" title="Favoritos"><i class="bi bi-heart"></i></a>
+                <a class="as-icon-btn" asp-controller="Cart" asp-action="Index" title="Carrinho"><i class="bi bi-cart3"></i></a>
+
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <div class="as-user-pill">
+                        <i class="bi bi-person-circle" style="color:#c9f26a;"></i>
+                        <span>@User.Identity.Name</span>
+                    </div>
+                    <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                        <button type="submit" class="btn text-danger p-0 ms-2 small fw-bold">Sair</button>
+                    </form>
+                }
+                else
+                {
+                    <a class="as-user-pill" asp-controller="Account" asp-action="Login">Entrar</a>
+                }
+            </div>
+        </div>
+    </header>
+
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.getElementById('asSidebar').classList.toggle('active');
+            document.getElementById('asOverlay').classList.toggle('active');
+        }
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
